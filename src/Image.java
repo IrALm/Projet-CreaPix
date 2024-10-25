@@ -65,5 +65,6 @@ public class Image
   public int height() {
     return image.getHeight();
   }
+  public BufferedImage getImage(){ return this.image ; }
 }
 

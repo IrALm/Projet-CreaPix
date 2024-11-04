@@ -139,19 +139,19 @@ public class Quadtree {
         if(this.estFeuille(Q)){
             if( Q.couleur == MonBoTablo.Couleur.R){
                 img.setRectangle(Q.firstX, Q.endX, Q.firstY, Q.endY, Color.RED);
-                Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
+               // Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
             } else if(Q.couleur == MonBoTablo.Couleur.B){
                 img.setRectangle(Q.firstX, Q.endX, Q.firstY, Q.endY, Color.BLUE);
-               Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
+               //Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
             } else if(Q.couleur == MonBoTablo.Couleur.J){
                 img.setRectangle(Q.firstX, Q.endX, Q.firstY, Q.endY, Color.YELLOW);
-                Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
+               // Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
             } else if(Q.couleur == MonBoTablo.Couleur.G){
                 img.setRectangle(Q.firstX, Q.endX, Q.firstY, Q.endY, Color.LIGHT_GRAY);
-                Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
+                //Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
             } else if(Q.couleur == MonBoTablo.Couleur.N){
                 img.setRectangle(Q.firstX, Q.endX , Q.firstY, Q.endY, Color.BLACK);
-                Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
+                //Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
             }
         }
         else{
@@ -162,7 +162,23 @@ public class Quadtree {
         }
         
     }
+
+    public void drawEpaisseur(Image img , Quadtree Q , Data data ){
+
+        if(this.estFeuille(Q)){
+
+            Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
+        }
+        else{
+            drawEpaisseur(img, Q.NO, data);
+            drawEpaisseur(img, Q.NE, data);
+            drawEpaisseur(img, Q.SO, data);
+            drawEpaisseur(img, Q.SE, data);
+        }
+    }
+
    
+    
 
     public Quadtree reColor( Recoloriage p){
 
@@ -204,19 +220,23 @@ public class Quadtree {
 
             if( NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.R){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.RED);
-             
+                drawEpaisseur(img, NoeudArecolorier.parent, data);
+            
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.B){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.BLUE);
-               
+                drawEpaisseur(img, NoeudArecolorier.parent, data);
+            
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.J){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.YELLOW);
-                
+                drawEpaisseur(img, NoeudArecolorier.parent, data);
+            
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.G){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.LIGHT_GRAY);
-               
+                drawEpaisseur(img, NoeudArecolorier.parent, data);
+            
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.N){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX , NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.BLACK);
-                
+                drawEpaisseur(img, NoeudArecolorier.parent, data);
                 
             }
         }
@@ -225,14 +245,19 @@ public class Quadtree {
 
                 if( NoeudArecolorier.couleur == MonBoTablo.Couleur.R){
                     img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.RED);
+                    drawEpaisseur(img, NoeudArecolorier, data);
                 } else if(NoeudArecolorier.couleur == MonBoTablo.Couleur.B){
                     img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.BLUE);
+                    drawEpaisseur(img, NoeudArecolorier, data);
                 } else if(NoeudArecolorier.couleur == MonBoTablo.Couleur.J){
                     img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.YELLOW);
+                    drawEpaisseur(img, NoeudArecolorier, data);
                 } else if(NoeudArecolorier.couleur == MonBoTablo.Couleur.G){
                     img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.LIGHT_GRAY);
+                    drawEpaisseur(img, NoeudArecolorier, data);
                 } else if(NoeudArecolorier.couleur == MonBoTablo.Couleur.N){
                     img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX , NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.BLACK);
+                    drawEpaisseur(img, NoeudArecolorier, data);
                 }
     
             }

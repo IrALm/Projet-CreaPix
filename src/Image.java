@@ -22,10 +22,7 @@ public class Image
   public Image(int width, int height) {
     image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
   }
-  @Override
-  public Image clone(){
-      return new Image(this.width(), this.height());
-  }
+ 
   
 
   /**

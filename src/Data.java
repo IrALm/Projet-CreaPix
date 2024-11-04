@@ -101,13 +101,15 @@ public class Data {
             String[] centre = liste.get(i).split(",");
             int x = Data.conversionStringToInt(i, centre[0]);
             int y = Data.conversionStringToInt(i, centre[1]);
+            y = data.n - y ; // pour les coordonnés en suivant l'abscisse et l'ordonnée comme en math
             for( int j = 2 ; j < centre.length ; j++){
                 centre[j] = centre[j].trim();// élimine les espaces avant et après
             }
-            MonBoTablo.Couleur c1 = Data.choixColor(centre[2]);
-            MonBoTablo.Couleur c2 = Data.choixColor(centre[3]);
-            MonBoTablo.Couleur c3 = Data.choixColor(centre[4]);
-            MonBoTablo.Couleur c4 = Data.choixColor(centre[5]);
+            /* Du coup C4 devient C1 et C3 devient C2 ( inversement ) */
+            MonBoTablo.Couleur c1 = Data.choixColor(centre[5]);
+            MonBoTablo.Couleur c2 = Data.choixColor(centre[4]);
+            MonBoTablo.Couleur c3 = Data.choixColor(centre[3]);
+            MonBoTablo.Couleur c4 = Data.choixColor(centre[2]);
             data.LesCentres.add(new Centre(x, y, c1, c2, c3, c4));
         }
         return data.LesCentres;
@@ -119,6 +121,7 @@ public class Data {
             String[] recoloriage = liste.get(i).split(",");
             int x = Data.conversionStringToInt(i, recoloriage[0]);
             int y = Data.conversionStringToInt(i, recoloriage[1]);
+            y = data.n - y ; // pour les coordonnés en suivant l'abscisse et l'ordonnée comme en math
             recoloriage[2] = recoloriage[2].trim();// élimine les espaces avant et après
             MonBoTablo.Couleur c = Data.choixColor(recoloriage[2]);
             data.LesRecoloriages.add(new Recoloriage(x, y, c));

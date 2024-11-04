@@ -22,6 +22,7 @@ public class Image
   public Image(int width, int height) {
     image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
   }
+  
 
   /**
    * Sets one pixel of the image.

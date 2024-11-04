@@ -106,10 +106,10 @@ public class Quadtree {
         }else{
             System.out.print("(");
             ecriture.write("(");
-            if(!Quadtree.estVide(arbre.NO)) toText(arbre.NO , ecriture);
-            if(!Quadtree.estVide(arbre.NE)) toText(arbre.NE , ecriture);
-            if(!Quadtree.estVide(arbre.SE)) toText(arbre.SE , ecriture);
-            if(!Quadtree.estVide(arbre.SO)) toText(arbre.SO , ecriture);
+            if(!Quadtree.estVide(arbre.NO)) toText(arbre.SO , ecriture);
+            if(!Quadtree.estVide(arbre.NE)) toText(arbre.SE , ecriture);
+            if(!Quadtree.estVide(arbre.SE)) toText(arbre.NE , ecriture);
+            if(!Quadtree.estVide(arbre.SO)) toText(arbre.NO , ecriture);
             System.out.print(")");
             ecriture.write(")");
         }
@@ -130,7 +130,7 @@ public class Quadtree {
         // Dessiner un segment horizontal et vertical en croix au point P
         segment.drawLine(Q.firstX(), y, Q.endX(), y); // Segment horizontal
         segment.drawLine(x, Q.firstY(), x, Q.endY()); // Segment vertical
-    
+        
         segment.dispose(); // Libérer les ressources utilisées par Graphics2D
     }
 
@@ -204,15 +204,20 @@ public class Quadtree {
 
             if( NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.R){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.RED);
+             
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.B){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.BLUE);
-
+               
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.J){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.YELLOW);
+                
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.G){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.LIGHT_GRAY);
+               
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.N){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX , NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.BLACK);
+                
+                
             }
         }
         else{

@@ -31,6 +31,7 @@ public class MonBoTablo {
             }
             Q.printQTree();
             Q.toImage(img, Q, data);
+            
             try{
                 img.save("photoVersionSansRecoloriage.png");
             } catch(IOException e){

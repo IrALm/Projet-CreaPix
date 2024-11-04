@@ -142,7 +142,7 @@ public class Quadtree {
                 Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
             } else if(Q.couleur == MonBoTablo.Couleur.B){
                 img.setRectangle(Q.firstX, Q.endX, Q.firstY, Q.endY, Color.BLUE);
-                Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
+               Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
             } else if(Q.couleur == MonBoTablo.Couleur.J){
                 img.setRectangle(Q.firstX, Q.endX, Q.firstY, Q.endY, Color.YELLOW);
                 Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
@@ -162,6 +162,7 @@ public class Quadtree {
         }
         
     }
+   
 
     public Quadtree reColor( Recoloriage p){
 
@@ -185,6 +186,7 @@ public class Quadtree {
         return  null ; // càd le point n'existe pas
     }
 
+
     public void compressQTree( Recoloriage p , Image img , Data data){
 
         Quadtree NoeudArecolorier = reColor(p);
@@ -202,20 +204,15 @@ public class Quadtree {
 
             if( NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.R){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.RED);
-                Quadtree.drawSegment(img, NoeudArecolorier.parent, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, data);
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.B){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.BLUE);
-                Quadtree.drawSegment(img, NoeudArecolorier.parent, NoeudArecolorier.parent.parent.endX, NoeudArecolorier.parent.parent.firstY, data);
-            
+
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.J){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.YELLOW);
-                Quadtree.drawSegment(img, NoeudArecolorier.parent, NoeudArecolorier.parent.parent.endX, NoeudArecolorier.parent.parent.firstY, data);
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.G){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.LIGHT_GRAY);
-                Quadtree.drawSegment(img, NoeudArecolorier.parent, NoeudArecolorier.parent.parent.endX, NoeudArecolorier.parent.parent.firstY, data);
             } else if(NoeudArecolorier.parent.couleur == MonBoTablo.Couleur.N){
                 img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX , NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.BLACK);
-                Quadtree.drawSegment(img, NoeudArecolorier.parent, NoeudArecolorier.parent.parent.endX, NoeudArecolorier.parent.parent.firstY, data);
             }
         }
         else{
@@ -223,19 +220,14 @@ public class Quadtree {
 
                 if( NoeudArecolorier.couleur == MonBoTablo.Couleur.R){
                     img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.RED);
-                    Quadtree.drawSegment(img, NoeudArecolorier, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, data);
                 } else if(NoeudArecolorier.couleur == MonBoTablo.Couleur.B){
                     img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.BLUE);
-                    Quadtree.drawSegment(img, NoeudArecolorier, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, data);
                 } else if(NoeudArecolorier.couleur == MonBoTablo.Couleur.J){
                     img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.YELLOW);
-                    Quadtree.drawSegment(img, NoeudArecolorier, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, data);
                 } else if(NoeudArecolorier.couleur == MonBoTablo.Couleur.G){
                     img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.LIGHT_GRAY);
-                    Quadtree.drawSegment(img, NoeudArecolorier, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, data);
                 } else if(NoeudArecolorier.couleur == MonBoTablo.Couleur.N){
                     img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX , NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.BLACK);
-                    Quadtree.drawSegment(img, NoeudArecolorier, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, data);
                 }
     
             }

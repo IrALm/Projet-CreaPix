@@ -102,15 +102,27 @@ public class Data {
             int x = Data.conversionStringToInt(i, centre[0]);
             int y = Data.conversionStringToInt(i, centre[1]);
             y = data.n - y ; // pour les coordonnés en suivant l'abscisse et l'ordonnée comme en math
-            for( int j = 2 ; j < centre.length ; j++){
-                centre[j] = centre[j].trim();// élimine les espaces avant et après
+            if( centre.length == 5){
+                for( int j = 2 ; j < centre.length ; j++){
+                    centre[j] = centre[j].trim();// élimine les espaces avant et après
+                }
+                MonBoTablo.Couleur c1 = Data.choixColor(centre[4]);
+                MonBoTablo.Couleur c2 = Data.choixColor(centre[3]);
+                MonBoTablo.Couleur c3 = Data.choixColor(centre[2]);
+                data.LesCentres.add(new Centre(x, y, c1, c2, c3, null));
             }
-            /* Du coup C4 devient C1 et C3 devient C2 ( inversement ) */
-            MonBoTablo.Couleur c1 = Data.choixColor(centre[5]);
-            MonBoTablo.Couleur c2 = Data.choixColor(centre[4]);
-            MonBoTablo.Couleur c3 = Data.choixColor(centre[3]);
-            MonBoTablo.Couleur c4 = Data.choixColor(centre[2]);
-            data.LesCentres.add(new Centre(x, y, c1, c2, c3, c4));
+            else{
+            
+                for( int j = 2 ; j < centre.length ; j++){
+                    centre[j] = centre[j].trim();// élimine les espaces avant et après
+                }
+                /* Du coup C4 devient C1 et C3 devient C2 ( inversement ) */
+                MonBoTablo.Couleur c1 = Data.choixColor(centre[5]);
+                MonBoTablo.Couleur c2 = Data.choixColor(centre[4]);
+                MonBoTablo.Couleur c3 = Data.choixColor(centre[3]);
+                MonBoTablo.Couleur c4 = Data.choixColor(centre[2]);
+                data.LesCentres.add(new Centre(x, y, c1, c2, c3, c4));
+            }
         }
         return data.LesCentres;
     }

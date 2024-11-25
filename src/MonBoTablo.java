@@ -5,13 +5,6 @@ import java.io.BufferedWriter;
 
 public class MonBoTablo {
     
-    public  static enum Couleur {
-        R,
-        B,
-        J,
-        G,
-        N
-    }
     
     public static void main(String[] args){
         if(args.length <= 0) System.out.println(" Aucun fichier recu en entrée .... ");

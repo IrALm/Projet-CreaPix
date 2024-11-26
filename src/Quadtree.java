@@ -103,7 +103,7 @@ public class Quadtree {
 
     @Override
     public String toString(){
-        return "  " + this.firstX + "  " + this.firstY + "  " + this.endX + "  " + this.endY + "  " + this.couleur;
+        return "  ( " + this.firstX + "  , " + this.firstY + "  ) ; ( " + this.endX + "  , " + this.endY + "  ) : " + this.couleur;
     }
 
     /**
@@ -238,13 +238,15 @@ public class Quadtree {
      * @complexité : o(n) où n est la taille de la liste des centres
      */
 
-    public Quadtree buildQTree( Image img , Data data){
+    public Quadtree buildQTree(Data data){
         Quadtree arbreConstruit = vide();
-        for(Centre c : data.LesCentres){
-            arbreConstruit = addQTree(c);
+
+        if(!data.LesCentres.isEmpty()){
+            for(Centre c : data.LesCentres){
+                arbreConstruit = addQTree(c);
+            }
         }
         return arbreConstruit;
-        
     }
 
     /**
@@ -308,11 +310,10 @@ public class Quadtree {
      * @Rôle : genere une Image à partir des informations contenues dans l'arbre
      * @param img
      * @param Q
-     * @param data
      * @complexité : o(n) où n est la hauteur ou la profondeur de l'arbre
      */
 
-    public  void toImage(Image img , Quadtree Q , Data data){
+    public  void toImage(Image img , Quadtree Q ){
 
         if(this.estFeuille(Q)){
             if( Q.couleur == Couleur.R){
@@ -328,10 +329,10 @@ public class Quadtree {
             }
         }
         else{
-             toImage(img, Q.NO, data);
-             toImage(img, Q.NE, data);
-             toImage(img, Q.SO, data);
-             toImage(img, Q.SE, data);
+             toImage(img, Q.NO);
+             toImage(img, Q.NE);
+             toImage(img, Q.SO);
+             toImage(img, Q.SE);
         }
         
     }
@@ -397,6 +398,7 @@ public class Quadtree {
      * @param data
      * @complexité : même que pour la méthode drawEpaisseur
      */
+
     public void compressQTree( Recoloriage p , Image img , Data data){
 
         Quadtree NoeudArecolorier = reColor(p);
@@ -464,7 +466,7 @@ public class Quadtree {
 
     public void printQTree(){
         if(!Quadtree.estVide(this)){
-            System.out.println( " Les coordonnées + couleurs : " + this.toString());
+            System.out.println(this.toString()+ "\n");
             if( !Quadtree.estVide(this.NO)){
                 this.NO.printQTree();
                 this.NE.printQTree();

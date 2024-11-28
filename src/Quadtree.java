@@ -85,28 +85,6 @@ public class Quadtree {
     }
 
     /**
-     * @Rôle : cloner un Quadtree
-     * @return Quadtree
-     * @complexité : o(1)
-     */
-
-    @Override
-    public Quadtree clone(){
-        return new Quadtree(this.firstX , this.firstY , this.endX , this.endY , this.NO , this.NE , this.SE , this.SO , this.couleur , this.parent);
-    }
-
-    /**
-     * @Rôle : retourne les coordonnées de la région sous forme des chaines 
-     * @return string
-     * @complexité : o(1)
-     */
-
-    @Override
-    public String toString(){
-        return "  ( " + this.firstX + "  , " + this.firstY + "  ) ; ( " + this.endX + "  , " + this.endY + "  ) : " + this.couleur;
-    }
-
-    /**
      * @Rôle : retourne un Quadtree vide
      * @complexité : o(1)
      * @return Quadtree
@@ -287,7 +265,7 @@ public class Quadtree {
      * @complexité : o( |x2-x1| + |y2 - y1|)
      */
 
-    public static void drawSegment(Image img, Quadtree Q, int x , int y, Data data) {
+    public static void drawSegment(Image img, Quadtree Q, Data data) {
         if (img == null || Q == null || data == null) {
             System.out.println("Erreur : Paramètres invalides pour dessiner un segment.");
             return;
@@ -299,9 +277,10 @@ public class Quadtree {
         segment.setColor(Color.BLACK); // couleur des segments
         segment.setStroke(new BasicStroke(data.e)); // l'épaisseur du segment
     
-        // Dessiner un segment horizontal et vertical en croix au point P
-        segment.drawLine(Q.firstX(), y, Q.endX(), y); // Segment horizontal
-        segment.drawLine(x, Q.firstY(), x, Q.endY()); // Segment vertical
+        segment.drawLine(Q.firstX(), Q.firstY(), Q.endX(), Q.firstY()); // Segment horizontal
+        segment.drawLine(Q.endX(), Q.firstY(), Q.endX(), Q.endY()); // Segment vertical
+        segment.drawLine(Q.firstX(), Q.endY(), Q.endX(), Q.endY()); // Segment horizontal
+        segment.drawLine(Q.firstX(), Q.firstY(), Q.firstX(), Q.endY()); // Segment vertical
         
         segment.dispose(); // Libérer les ressources utilisées par Graphics2D
     }
@@ -349,7 +328,7 @@ public class Quadtree {
 
         if(this.estFeuille(Q)){
 
-            Quadtree.drawSegment(img, Q, Q.endX, Q.firstY, data);
+            Quadtree.drawSegment(img, Q,data);
         }
         else{
             drawEpaisseur(img, Q.NO, data);
@@ -392,7 +371,7 @@ public class Quadtree {
     }
 
     /**
-     * @Rôle : fait la compression de l'image avant le recoloriage si possible
+     * @Rôle : fait la compression de l'image avant le recoloriage 
      * @param p
      * @param img
      * @param data
@@ -402,76 +381,66 @@ public class Quadtree {
     public void compressQTree( Recoloriage p , Image img , Data data){
 
         Quadtree NoeudArecolorier = reColor(p);
-        NoeudArecolorier.couleur = p.getC();
-        if(    NoeudArecolorier.couleur == NoeudArecolorier.parent.NO.couleur
-            && NoeudArecolorier.couleur == NoeudArecolorier.parent.NE.couleur
-            && NoeudArecolorier.couleur == NoeudArecolorier.parent.SE.couleur
-            && NoeudArecolorier.couleur == NoeudArecolorier.parent.SO.couleur
-            && estFeuille(NoeudArecolorier.parent.NO)
-            && estFeuille(NoeudArecolorier.parent.NE)
-            && estFeuille(NoeudArecolorier.parent.SE)
-            && estFeuille(NoeudArecolorier.parent.SO)
-        ){
-            
-            NoeudArecolorier.parent.NO = null;
-            NoeudArecolorier.parent.NE = null;
-            NoeudArecolorier.parent.SE = null;
-            NoeudArecolorier.parent.SO = null;
-            NoeudArecolorier.parent.couleur = NoeudArecolorier.couleur ;
-
-            if( NoeudArecolorier.parent.couleur == Couleur.R){
-                img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.RED);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-            
-            } else if(NoeudArecolorier.parent.couleur == Couleur.B){
-                img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.BLUE);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-            
-            } else if(NoeudArecolorier.parent.couleur == Couleur.J){
-                img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.YELLOW);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-            
-            } else if(NoeudArecolorier.parent.couleur == Couleur.G){
-                img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.LIGHT_GRAY);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-            
-            } else if(NoeudArecolorier.parent.couleur == Couleur.N){
-                img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX , NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.BLACK);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
+        if(!Quadtree.estVide(NoeudArecolorier)){
+            NoeudArecolorier.couleur = p.getC();
+            if(    NoeudArecolorier.couleur == NoeudArecolorier.parent.NO.couleur
+                && NoeudArecolorier.couleur == NoeudArecolorier.parent.NE.couleur
+                && NoeudArecolorier.couleur == NoeudArecolorier.parent.SE.couleur
+                && NoeudArecolorier.couleur == NoeudArecolorier.parent.SO.couleur
+                && estFeuille(NoeudArecolorier.parent.NO)
+                && estFeuille(NoeudArecolorier.parent.NE)
+                && estFeuille(NoeudArecolorier.parent.SE)
+                && estFeuille(NoeudArecolorier.parent.SO)
+            ){
                 
-            }
-        }
-        else{
-            if( this.estFeuille(NoeudArecolorier)){
+                NoeudArecolorier.parent.NO = null;
+                NoeudArecolorier.parent.NE = null;
+                NoeudArecolorier.parent.SE = null;
+                NoeudArecolorier.parent.SO = null;
+                NoeudArecolorier.parent.couleur = NoeudArecolorier.couleur ;
 
-                if( NoeudArecolorier.couleur == Couleur.R){
-                    img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.RED);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                } else if(NoeudArecolorier.couleur == Couleur.B){
-                    img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.BLUE);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                } else if(NoeudArecolorier.couleur == Couleur.J){
-                    img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.YELLOW);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                } else if(NoeudArecolorier.couleur == Couleur.G){
-                    img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.LIGHT_GRAY);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                } else if(NoeudArecolorier.couleur == Couleur.N){
-                    img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX , NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.BLACK);
-                    drawEpaisseur(img, NoeudArecolorier, data);
+                if( NoeudArecolorier.parent.couleur == Couleur.R){
+                    img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.RED);
+                    drawSegment(img, NoeudArecolorier.parent, data);
+                
+                } else if(NoeudArecolorier.parent.couleur == Couleur.B){
+                    img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.BLUE);
+                    drawSegment(img, NoeudArecolorier.parent, data);
+                
+                } else if(NoeudArecolorier.parent.couleur == Couleur.J){
+                    img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.YELLOW);
+                    drawSegment(img, NoeudArecolorier.parent, data);
+                
+                } else if(NoeudArecolorier.parent.couleur == Couleur.G){
+                    img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX, NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.LIGHT_GRAY);
+                    drawSegment(img, NoeudArecolorier.parent, data);
+                
+                } else if(NoeudArecolorier.parent.couleur == Couleur.N){
+                    img.setRectangle(NoeudArecolorier.parent.firstX, NoeudArecolorier.parent.endX , NoeudArecolorier.parent.firstY, NoeudArecolorier.parent.endY, Color.BLACK);
+                    drawSegment(img, NoeudArecolorier.parent, data);
+                    
                 }
             }
-        }
-    }
+            else{
+                if( this.estFeuille(NoeudArecolorier)){
 
-    public void printQTree(){
-        if(!Quadtree.estVide(this)){
-            System.out.println(this.toString()+ "\n");
-            if( !Quadtree.estVide(this.NO)){
-                this.NO.printQTree();
-                this.NE.printQTree();
-                this.SE.printQTree();
-                this.SO.printQTree();
+                    if( NoeudArecolorier.couleur == Couleur.R){
+                        img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.RED);
+                        drawSegment(img, NoeudArecolorier, data);
+                    } else if(NoeudArecolorier.couleur == Couleur.B){
+                        img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.BLUE);
+                        drawSegment(img, NoeudArecolorier, data);
+                    } else if(NoeudArecolorier.couleur == Couleur.J){
+                        img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.YELLOW);
+                        drawSegment(img, NoeudArecolorier, data);
+                    } else if(NoeudArecolorier.couleur == Couleur.G){
+                        img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX, NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.LIGHT_GRAY);
+                        drawSegment(img, NoeudArecolorier, data);
+                    } else if(NoeudArecolorier.couleur == Couleur.N){
+                        img.setRectangle(NoeudArecolorier.firstX, NoeudArecolorier.endX , NoeudArecolorier.firstY, NoeudArecolorier.endY, Color.BLACK);
+                        drawSegment(img, NoeudArecolorier, data);
+                    }
+                }
             }
         }
     }

@@ -506,23 +506,5 @@ public class ArbreTernaire{
     
             }
         }
-    }
-    public void printAbTer(){
-        if(!ArbreTernaire.estVide(this)){
-            System.out.println(this.toString() + "\n");
-            if( !ArbreTernaire.estVide(this.gauche)){
-                this.gauche.printAbTer();
-            }
-            if( !ArbreTernaire.estVide(this.milieu)){
-                this.milieu.printAbTer();
-            }
-            if( !ArbreTernaire.estVide(this.droit)){
-                this.droit.printAbTer();
-            }
-
-        }
-    }
-
-    
-    
+    }   
 }

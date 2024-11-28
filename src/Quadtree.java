@@ -463,16 +463,4 @@ public class Quadtree {
             }
         }
     }
-
-    public void printQTree(){
-        if(!Quadtree.estVide(this)){
-            System.out.println(this.toString()+ "\n");
-            if( !Quadtree.estVide(this.NO)){
-                this.NO.printQTree();
-                this.NE.printQTree();
-                this.SE.printQTree();
-                this.SO.printQTree();
-            }
-        }
-    }
 }

@@ -13,7 +13,9 @@ public class MonBoTablo {
             System.out.println(" Veuillez donner en paramètre : \n - Un numéro de la variante à exécuter( 1 ou 2) \n - un chemin pour le fichier d'entrés \n - et un chemin pour le dossier des fichiers de sortie \n ");
 
         else{
-        
+            System.out.println(args[1]);
+            String[] cheminFichier = args[1].split(File.separator);
+            String nomFichier = cheminFichier[cheminFichier.length - 1]; // pour récuperer juste le nom du fichier d'entrée
             int variante = Integer.parseInt(args[0]);
             if(variante == 1){
 
@@ -28,18 +30,18 @@ public class MonBoTablo {
 
 
                     try{
-                        BufferedWriter ecritureFichier = new BufferedWriter(new FileWriter(args[2] + File.separator + "sortie.txt"));
+                        BufferedWriter ecritureFichier = new BufferedWriter(new FileWriter(args[2] + File.separator + "AganzeLwaboshiRobinNtwari"+nomFichier+"_B.txt"));
                         Q.toText(Q , ecritureFichier);
                         ecritureFichier.close(); // fermeture du fichier
-                        System.out.println("\n\n  Un fichier ** sortie.txt ** est crée dans le dossier : " + args[2] + File.separator + " ");
+                        System.out.println("\n\n  Un fichier ** AganzeLwaboshiRobinNtwari"+nomFichier+"_B.txt ** est crée dans le dossier : " + args[2] + File.separator + " ");
                     } catch(IOException e){
                         e.printStackTrace();
                     }
                     Q.toImage(img, Q);
                     Q.drawEpaisseur(img, Q, data);
                     try{
-                        img.save(args[2] + File.separator + "photoVersionSansRecoloriage.png");
-                        System.out.println("\n  Un fichier ** photoVersionSansRecoloriage.png ** est crée dans le dossier : " + args[2] + File.separator + " ");
+                        img.save(args[2] + File.separator + "AganzeLwaboshiRobinNtwari"+nomFichier+"_B.png");
+                        System.out.println("\n  Un fichier **AganzeLwaboshiRobinNtwari"+nomFichier+"_B.png ** est crée dans le dossier : " + args[2] + File.separator + " ");
                     } catch(IOException e){
                         System.out.println(" fichier non crée " + e.getMessage());
                     }
@@ -48,16 +50,16 @@ public class MonBoTablo {
                             Q.compressQTree(rec, img, data);
                     }
                     try{
-                        img.save(args[2] + File.separator + "photoVersionAvecRecoloriage.png");
-                        System.out.println("\n  Un fichier ** photoVersionAvecRecoloriage.png ** est crée dans le dossier : " + args[2] + File.separator + " ");
+                        img.save(args[2] + File.separator + "AganzeLwaboshiRobinNtwari"+nomFichier+"_R.png");
+                        System.out.println("\n  Un fichier ** AganzeLwaboshiRobinNtwari"+nomFichier+"_R.png ** est crée dans le dossier : " + args[2] + File.separator + " ");
                     } catch(IOException e){
                         System.out.println(" fichier non crée " + e.getMessage());
                     }
                     try{
-                        BufferedWriter ecritureFichier = new BufferedWriter(new FileWriter(args[2] + File.separator + "sortieRecoloriage.txt"));
+                        BufferedWriter ecritureFichier = new BufferedWriter(new FileWriter(args[2] + File.separator + "AganzeLwaboshiRobinNtwari"+nomFichier+"_R.txt"));
                         Q.toText(Q , ecritureFichier);
                         ecritureFichier.close(); // fermeture du fichier
-                        System.out.println("\n\n  Un fichier ** sortieRecoloriage.txt ** est crée dans : " + args[2] + File.separator + " ");
+                        System.out.println("\n\n  Un fichier ** AganzeLwaboshiRobinNtwari"+nomFichier+"_R.txt ** est crée dans : " + args[2] + File.separator + " ");
                     } catch(IOException e){
                         e.printStackTrace();
                     }
@@ -80,16 +82,16 @@ public class MonBoTablo {
                     ab.toImage(img, ab);
                     ab.drawEpaisseur(img, ab, data);
                     try{
-                        BufferedWriter ecritureFichier = new BufferedWriter(new FileWriter(args[2] + File.separator + "sortieVersion2.txt"));
+                        BufferedWriter ecritureFichier = new BufferedWriter(new FileWriter(args[2] + File.separator + "AganzeLwaboshiRobinNtwari"+nomFichier+"_B.txt"));
                         ab.toText(ab , ecritureFichier);
                         ecritureFichier.close(); // fermeture du fichier
-                        System.out.println("\n\n  Un fichier ** sortieVesion2.txt ** est crée dans : " + args[2] + File.separator +" ");
+                        System.out.println("\n\n  Un fichier ** AganzeLwaboshiRobinNtwari"+nomFichier+"_B.txt ** est crée dans : " + args[2] + File.separator +" ");
                     } catch(IOException e){
                         e.printStackTrace();
                     }
                     try{
-                        img.save(args[2] + File.separator + "photoVersionSansRecoloriageVersion2.png");
-                        System.out.println("\n\n  Un fichier ** photoVersionSansRecoloriageVersion2.png ** est crée dans : " + args[2] + File.separator +" ");
+                        img.save(args[2] + File.separator + "AganzeLwaboshiRobinNtwari"+nomFichier+"_B.png");
+                        System.out.println("\n\n  Un fichier ** AganzeLwaboshiRobinNtwari"+nomFichier+"_B.png ** est crée dans : " + args[2] + File.separator +" ");
 
                     } catch(IOException e){
                         System.out.println(" fichier non crée " + e.getMessage());
@@ -99,17 +101,17 @@ public class MonBoTablo {
                             ab.compressQTree(rec, img, data);
                     }
                     try{
-                        img.save(args[2] + File.separator + "photoVersionAvecRecoloriageVersion2.png");
-                        System.out.println("\n\n Un fichier ** photoVersionAvecRecoloriageVersion2.png ** est crée dans : " + args[2] + File.separator +" ");
+                        img.save(args[2] + File.separator + "AganzeLwaboshiRobinNtwari"+nomFichier+"_R.png");
+                        System.out.println("\n\n Un fichier ** AganzeLwaboshiRobinNtwari"+nomFichier+"_R.png ** est crée dans : " + args[2] + File.separator +" ");
 
                     } catch(IOException e){
                         System.out.println(" fichier non crée " + e.getMessage());
                     }
                     try{
-                        BufferedWriter ecritureFichier = new BufferedWriter(new FileWriter(args[2] + File.separator + "sortieRecoloriageVersion2.txt"));
+                        BufferedWriter ecritureFichier = new BufferedWriter(new FileWriter(args[2] + File.separator + "AganzeLwaboshiRobinNtwari"+nomFichier+"_R.txt"));
                         ab.toText(ab , ecritureFichier);
                         ecritureFichier.close(); // fermeture du fichier
-                        System.out.println("\n\n  Un fichier ** sortieRecoloriageVersion2.txt ** est crée dans : " + args[2] + File.separator +" ");
+                        System.out.println("\n\n  Un fichier ** AganzeLwaboshiRobinNtwari"+nomFichier+"_R.txt ** est crée dans : " + args[2] + File.separator +" ");
 
                     } catch(IOException e){
                         e.printStackTrace();

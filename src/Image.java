@@ -44,6 +44,7 @@ public class Image
     }
   }
 
+  /* La méthode ci-dessous permet de réprésenter les pixels sur une région triangulaire */
   public void setTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
     int minX = Math.max(0, Math.min(x1, Math.min(x2, x3)));
     int maxX = Math.min(image.getWidth() - 1, Math.max(x1, Math.max(x2, x3)));

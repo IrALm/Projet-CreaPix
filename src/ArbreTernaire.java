@@ -53,16 +53,6 @@ public class ArbreTernaire{
     }
 
     /**
-     * @Rôle : renvoie les coordonnées de la region sous formes de chaines
-     * @complexité : o(1)
-     */
-
-    @Override
-    public String toString(){
-        return "  ( " + this.x1 + "  " + this.y1 + "  ) ; ( " + this.x2 + "  " + this.y2 + "  ) ; ( " + this.x3 + "  " + this.y3 + " ) : " + this.c;
-    }
-
-    /**
      * @Rôle : retourne un arbre vide
      * @complexité : o(1)
      * @return ArbreTernaire
@@ -332,7 +322,6 @@ public class ArbreTernaire{
         segment.setColor(Color.BLACK); // couleur des segments
         segment.setStroke(new BasicStroke(data.e)); // l'épaisseur du segment
     
-        // Dessiner un segment horizontal et vertical en croix au point P
         segment.drawLine(ab.x1 , ab.y1 , ab.x2 , ab.y2); // Segment oblique
         segment.drawLine(ab.x2,ab.y2 , ab.x3 , ab.y3); // Segment oblique
         segment.drawLine(ab.x3,ab.y3, ab.x1 , ab.y1); // Segment oblique
@@ -389,7 +378,7 @@ public class ArbreTernaire{
     }
 
     /**
-     * @Rôle : fait la compression de l'image avant le recoloriage si possible
+     * @Rôle : fait la compression de l'image avant le recoloriage 
      * @param p
      * @param img
      * @param data
@@ -399,111 +388,113 @@ public class ArbreTernaire{
     public void compressQTree( Recoloriage p , Image img , Data data){
 
         ArbreTernaire NoeudArecolorier = reColor(p);
-        NoeudArecolorier.c = p.getC();
-        if(    NoeudArecolorier.c == NoeudArecolorier.parent.gauche.c
-            && NoeudArecolorier.c == NoeudArecolorier.parent.milieu.c
-            && NoeudArecolorier.c == NoeudArecolorier.parent.droit.c
-            && estFeuille(NoeudArecolorier.parent.gauche)
-            && estFeuille(NoeudArecolorier.parent.milieu)
-            && estFeuille(NoeudArecolorier.parent.droit)
-            ){ 
-            
-            NoeudArecolorier.parent.gauche = null;
-            NoeudArecolorier.parent.milieu = null;
-            NoeudArecolorier.parent.droit = null;
-            NoeudArecolorier.parent.c = NoeudArecolorier.c ;
+        if(!ArbreTernaire.estVide(NoeudArecolorier)){
+            NoeudArecolorier.c = p.getC();
+            if(    NoeudArecolorier.c == NoeudArecolorier.parent.gauche.c
+                && NoeudArecolorier.c == NoeudArecolorier.parent.milieu.c
+                && NoeudArecolorier.c == NoeudArecolorier.parent.droit.c
+                && estFeuille(NoeudArecolorier.parent.gauche)
+                && estFeuille(NoeudArecolorier.parent.milieu)
+                && estFeuille(NoeudArecolorier.parent.droit)
+                ){ 
+                
+                NoeudArecolorier.parent.gauche = null;
+                NoeudArecolorier.parent.milieu = null;
+                NoeudArecolorier.parent.droit = null;
+                NoeudArecolorier.parent.c = NoeudArecolorier.c ;
 
-            if( NoeudArecolorier.parent.c == Couleur.R){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.RED);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-            
-            } else if(NoeudArecolorier.parent.c == Couleur.B){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.BLUE);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-            
-            } else if(NoeudArecolorier.parent.c == Couleur.J){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.YELLOW);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-            
-            } else if(NoeudArecolorier.parent.c == Couleur.G){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.LIGHT_GRAY);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-            
-            } else if(NoeudArecolorier.parent.c == Couleur.N){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.BLACK);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
+                if( NoeudArecolorier.parent.c == Couleur.R){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.RED);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
                 
-            }else if(NoeudArecolorier.parent.c == Couleur.W){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.WHITE);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
+                } else if(NoeudArecolorier.parent.c == Couleur.B){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.BLUE);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
                 
-            }else if(NoeudArecolorier.parent.c == Couleur.V){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.GREEN);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
+                } else if(NoeudArecolorier.parent.c == Couleur.J){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.YELLOW);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
                 
-            }else if(NoeudArecolorier.parent.c == Couleur.O){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.ORANGE);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
+                } else if(NoeudArecolorier.parent.c == Couleur.G){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.LIGHT_GRAY);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
                 
-            }else if(NoeudArecolorier.parent.c == Couleur.C){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.CYAN);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-                
-            }else if(NoeudArecolorier.parent.c == Couleur.D){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.DARK_GRAY);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-                
-            }else if(NoeudArecolorier.parent.c == Couleur.S){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.PINK);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-                
-            }else if(NoeudArecolorier.parent.c == Couleur.M){
-                img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.MAGENTA);
-                drawEpaisseur(img, NoeudArecolorier.parent, data);
-                
-            }
-        }
-        else{
-            if( this.estFeuille(NoeudArecolorier)){
-
-                if( NoeudArecolorier.c == Couleur.R){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.RED);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                } else if(NoeudArecolorier.c == Couleur.B){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.BLUE);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                } else if(NoeudArecolorier.c == Couleur.J){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.YELLOW);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                } else if(NoeudArecolorier.c == Couleur.G){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.LIGHT_GRAY);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                } else if(NoeudArecolorier.c == Couleur.N){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.BLACK);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                }else if(NoeudArecolorier.c == Couleur.W){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.WHITE);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                }else if(NoeudArecolorier.c == Couleur.V){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.GREEN);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                }else if(NoeudArecolorier.c == Couleur.O){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.ORANGE);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                }else if(NoeudArecolorier.c == Couleur.C){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.CYAN);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                }else if(NoeudArecolorier.c == Couleur.D){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.DARK_GRAY);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                }else if(NoeudArecolorier.c == Couleur.S){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.PINK);
-                    drawEpaisseur(img, NoeudArecolorier, data);
-                }else if(NoeudArecolorier.c == Couleur.M){
-                    img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.MAGENTA);
-                    drawEpaisseur(img, NoeudArecolorier, data);
+                } else if(NoeudArecolorier.parent.c == Couleur.N){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.BLACK);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
+                    
+                }else if(NoeudArecolorier.parent.c == Couleur.W){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.WHITE);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
+                    
+                }else if(NoeudArecolorier.parent.c == Couleur.V){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.GREEN);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
+                    
+                }else if(NoeudArecolorier.parent.c == Couleur.O){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.ORANGE);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
+                    
+                }else if(NoeudArecolorier.parent.c == Couleur.C){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.CYAN);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
+                    
+                }else if(NoeudArecolorier.parent.c == Couleur.D){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.DARK_GRAY);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
+                    
+                }else if(NoeudArecolorier.parent.c == Couleur.S){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.PINK);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
+                    
+                }else if(NoeudArecolorier.parent.c == Couleur.M){
+                    img.setTriangle(NoeudArecolorier.parent.x1, NoeudArecolorier.parent.y1, NoeudArecolorier.parent.x2, NoeudArecolorier.parent.y2, NoeudArecolorier.parent.x3, NoeudArecolorier.parent.y3, Color.MAGENTA);
+                    drawEpaisseur(img, NoeudArecolorier.parent, data);
+                    
                 }
-    
+            }
+            else{
+                if( this.estFeuille(NoeudArecolorier)){
+
+                    if( NoeudArecolorier.c == Couleur.R){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.RED);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    } else if(NoeudArecolorier.c == Couleur.B){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.BLUE);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    } else if(NoeudArecolorier.c == Couleur.J){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.YELLOW);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    } else if(NoeudArecolorier.c == Couleur.G){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.LIGHT_GRAY);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    } else if(NoeudArecolorier.c == Couleur.N){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.BLACK);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    }else if(NoeudArecolorier.c == Couleur.W){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.WHITE);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    }else if(NoeudArecolorier.c == Couleur.V){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.GREEN);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    }else if(NoeudArecolorier.c == Couleur.O){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.ORANGE);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    }else if(NoeudArecolorier.c == Couleur.C){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.CYAN);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    }else if(NoeudArecolorier.c == Couleur.D){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.DARK_GRAY);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    }else if(NoeudArecolorier.c == Couleur.S){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.PINK);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    }else if(NoeudArecolorier.c == Couleur.M){
+                        img.setTriangle(NoeudArecolorier.x1, NoeudArecolorier.y1, NoeudArecolorier.x2, NoeudArecolorier.y2, NoeudArecolorier.x3, NoeudArecolorier.y3, Color.MAGENTA);
+                        drawEpaisseur(img, NoeudArecolorier, data);
+                    }
+        
+                }
             }
         }
     }   

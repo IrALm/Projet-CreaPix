@@ -1,0 +1,67 @@
+-----------------------------------------------------------------------------------------
+
+    EXPLICATIONS PRECISES SUR LE FICHIER D'ENTREE POUR LA VARIANTE DES ARBRES TERNAIRES
+
+-----------------------------------------------------------------------------------------
+
+Concernant le fichier en entrée pour la variante des arbres ternaires , elle est concue de la même manière
+que le fichier d'entrée pour le Quadtree, la seule différence est que les centres contiennent seulement 3
+couleurs et on a pris l'initiative d'ajouter d'autres couleurs.
+
+En ce qui concerne le recoloriage, les informations sont identiques
+Exemple type de fichier :
+
+1000   // ligne 1 : pour l’image initiale, le côté n (en nombre de pixels). Ici n = 1000.
+5      // ligne 2 : le nombre m ≥ 0 de centres fournis. Ici m = 5.
+200,500,R,N,J
+900,400,J,B,R
+800,300,J,R,B
+850,350,R,G,J
+540,120,J,R,B // le m ième centre
+5      // l'épaisseur e ( valeur impaire )
+4      // le nombre k des recoloriage fourni
+400,300,G
+270,250,B
+700,10,J
+580,12,N // la dernière paire de recoloriage
+
+--------------------------------------------------------------------------------------------------------
+
+CONCERNANT L'IMPLEMENTATION DE LA VARIANTE 2
+
+---------------------------------------------------------------------------------------------------------
+
+Notre arbre ternaire divise donc l'image en 3 régions , on a choisi comme nom : gauche, milieu et droit
+- On s'est convenu que nos regions seront des regions triangulaires
+- Pour cela, nous avons modifier la classe Image en y ajoutant une nouvelle méthode 
+  qui permet de réprésenter des pixels sur une region triangulaire.
+
+** Explication de la division en 3 sous-regions :
+
+Au depart, notre region est rectangulaire :
+ - On commence alors par la diviser en 3 sous regions triangulaires comme suit :
+      le coin inférieur droit de notre rectangle est ( 0, 0 ) au depart 
+      le coin supérieur quand à lui est de (n,n)
+      Nous avons choisi de répresenter notre region triangulaire par 3 Points ( les 3 coins du triangle) 
+    - On prend le point milieu de notre rectangle ( ici : ( n/2 , n/2 ))
+    le 1 er triangle aura comme coordonnées :
+     ( 0, 0) , ( 0 , n ) et ( n ,n )
+    Le 2 ième triangle aura comme coordonnées :
+     ( 0, 0) , ( 0 , n/2 ) et ( n , 0)
+    Le 3 ième triangle aura comme coordonnées : 
+     ( 0 , n/2) , ( n , 0) et ( n ,n )
+    Pour les trois triangles, on mettra juste une couleur blanche par defaut....
+    
+ Ainsi , notre rectangle de depart est diviser en 3 triangles. 
+ Au départ , on se fixe une convention selon laquelle notre racine a comme coordonnées (0,0) , (0,0) , (0,0)
+ quand on cherchera la region au quel le 1 er Centre appartient, On commencera par vérifier si la racine est toujours vide
+ à partir de cette convention , si oui, Ce que notre region est encore rectangulaire et là on le divise alors
+ en 3 sous-régions triangulaires suivant la méthode expliquée ci-haut.( aprés , on pourra mettre d'autre valeurs aux coordonées de la racine pour que la condition ne soit plus valide , comme ca pour chercher le 2 ième et 3 ième centre , etc ... la condition ne sera plus valide) 
+ une fois divisée, on peut alors chercher notre centre dans l'un de ces 3 regions.
+ Et pour verifier si un centre P appartient à une region specifique representée soit par les points A , B et C :
+ on calcule l'air du triangle PAB , ensuite du triangle PBC , ensuite du triangle  PCA
+ et on verifie si l'air du triangle ABC = aire PAB + aire PBC + aire de PCA , 
+ si oui , ce que le point P appartient à notre region.Ensuite, à partir de ce centre, on pourra diviser notre région triangulaire 
+ en 3 sous-régions triangulaires.
+
+ Ensuite pour le reste, la logique reste la même que celle du quadtree.

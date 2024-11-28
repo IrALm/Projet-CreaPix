@@ -58,7 +58,7 @@ public class Data {
                 e.printStackTrace(); // Gestion d'erreur en cas de problème de lecture du fichier
         } finally {
             try {
-                // Fermeture du BufferedReader pour éviter des fuites de mémoire
+                // Fermeture du BufferedReader 
                 if (lecteur_de_ligne != null) {
                         lecteur_de_ligne.close();
                 }
@@ -82,7 +82,7 @@ public class Data {
     private static int conversionStringToInt( int nb , String str){
 
         try {
-            str = str.trim(); // élimine les espaces avant et après
+            str = str.trim(); // élimine les espaces avant et après la chaine de caractère
             int nombre = Integer.parseInt(str);
             nb = nombre ;
         } catch (NumberFormatException e) {
@@ -164,7 +164,7 @@ public class Data {
                 int y = Data.conversionStringToInt(i, centre[1]);
                 y = data.n - y ; // pour les coordonnés en suivant l'abscisse et l'ordonnée comme en math
 
-                if( centre.length == 5){ // pour le version des arbres ternaires
+                if( centre.length == 5){ // pour la version des arbres ternaires
                     for( int j = 2 ; j < centre.length ; j++){
                         centre[j] = centre[j].trim();// élimine les espaces avant et après
                     }

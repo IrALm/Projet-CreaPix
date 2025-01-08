@@ -40,16 +40,25 @@ pour gérer les nuances de couleurs
    git clone https://github.com/IrALm/Projet-CreaPix.git
    cd Projet-CreaPix
 2 . Pour compiler :
+    ```bash
     javac -d Projet-CreaPix/bin Projet-CreaPix/src/*.java
+    
 3. Pour l'exécution :
-   Exécution de la première variante : 
-        java -classpath bin MonBoTablo 1 LesEntrees/MesExemplesQuadtree/Exemple4.txt LesSorties/SortieQuadtree/ 
+4. 
+   Exécution de la première variante :
+
+        ```bash
+        java -classpath bin MonBoTablo 1 LesEntrees/MesExemplesQuadtree/Exemple4.txt LesSorties/SortieQuadtree/
+   
         Explication : MonBoTablo = classe contenant la fonction main
                       1 : n° de la variante à exécuter
                       chemin de fichier d'entréé où se trouve les données utiles pour la bonne éxecution du programme:
                       -LesEntrees/MesExemplesQuadtree/Exemple4.txt
                       chemin de sortie pour le resultat produit : LesSorties/SortieQuadtree/
+   
     Execution pour la 2 ième variante :
+
+        ```bash
         java -classpath bin MonBoTablo 2 LesEntrees/MesExemplesArbreTernaire/Exemple3.txt LesSorties/SortieArbreTernaire/
 
 

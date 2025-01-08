@@ -51,7 +51,7 @@ pour gérer les nuances de couleurs
         
         java -classpath bin MonBoTablo 1 LesEntrees/MesExemplesQuadtree/Exemple4.txt LesSorties/SortieQuadtree/
    
-        Explication : MonBoTablo = classe contenant la fonction main
+   Explication : MonBoTablo = classe contenant la fonction main
                       1 : n° de la variante à exécuter
                       chemin de fichier d'entréé où se trouve les données utiles pour la bonne éxecution du programme:
                       -LesEntrees/MesExemplesQuadtree/Exemple4.txt
